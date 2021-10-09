@@ -1,0 +1,31 @@
+threat = 0
+na = 0 #not allowed, shows that kings are next to each other
+i = 1
+
+while i <= 100:
+     print("creating the number", i, "random chessboard!")
+     bkx = random.randint(1, 8) #defining the x coordinate of the black king
+     bky = random.randint(1, 8) #defining the y coordinate of the black king
+     wkx = random.randint(1, 8) #defining the x coordinate of the white king
+     wky = random.randint(1, 8) #defining the y coordinate of the white king
+     while wkx == bkx and wky == bky :
+          wqx = random.randint(1, 8) # if the white king gets placed into the same square as the black king then his coordinates are redefined
+          wqy = random.randint(1, 8)
+
+     wqx = random.randint(1, 8) #defining the x coordinate of the white queen
+     wqy = random.randint(1, 8) #defining the y coordinate of the white queen
+
+     while (wqx == bkx and wqy == bky) or (wqx == wkx and wqy == wky):
+          wqx = random.randint(1, 8)  # if the white queen gets placed into the same square as the black king or the white king then his coordinates are redefined
+          wqy = random.randint(1, 8)
+
+     if (wqx == bkx or wqy == bky) or (abs(wkx - bkx) == abs(wky - bky)) : #covering all possible checking combinations from the white queen towards the black king
+          threat = threat + 1
+
+
+     if abs(wkx - bkx) <= 1 and abs(wky - bky) <= 1:
+          na = na + 1
+
+     i = i + 1
+
+print("The white queen threatened the black king", threat, "times and the kings where in not allowed neighbouring squares", na, "times!")
