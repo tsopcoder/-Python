@@ -1,0 +1,47 @@
+import requests
+
+r = requests.get('https://qrng.anu.edu.au/API/jsonI.php?length=1000&type=uint8') #r is a RESPONSE variable which saves all the numbers provided by the GET request to the ANU link/source
+# print(r.text)
+# print(r.status_code) # if result == 200, this means my request was successful
+
+#  The type of the return value of .json() is a dictionary, so I can access values in the object by key
+p = r.json()
+
+anuNumbers = p["data"]
+
+#until here I created a response to the asked url, then turned it to a dictionary via json and finally stored all the data - numbers under the key "data" in a list
+binary = [0,0,0,0,0,0,0,0]
+j = 0
+max1 = 1
+max0 = 1
+while (j < 1000) :
+    pl = 0
+    while (anuNumbers[j] > 0 and pl < 8) :
+         binary[pl] = (anuNumbers[j] % 2)
+         anuNumbers[j] = anuNumbers[j] // 2;
+         pl = pl + 1
+
+    cons0 = 0  # counter for consequtive 0s
+    cons1 = 0  # counter for consequtive 1s
+    curr0 = 0  # counter for largest consequtive streak of 0s in a number
+    curr1 = 0  # counter for largest consequtive streak of 1s in a number
+    for i in binary:
+        if (i == 1):
+                curr0 = cons0
+                cons0 = 0
+                cons1 = cons1 + 1
+        elif (i == 0):
+                curr1 = cons1
+                cons1 = 0
+                cons0 = cons0 + 1
+
+    if curr0 > max0:
+        max0 = curr0
+
+    if curr1 > max1:
+        max1 = curr1
+
+    j = j + 1
+
+print("Mεγαλύτερο μήκος συνεχόμενων μηδενικών : ", max0)
+print("Mεγαλύτερο μήκος συνεχόμενων μονάδων : ", max1)
