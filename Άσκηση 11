@@ -20,6 +20,11 @@ while (j < 1000) :
          binary[pl] = (anuNumbers[j] % 2)
          anuNumbers[j] = anuNumbers[j] // 2;
          pl = pl + 1
+    
+    if anuNumbers[j] == 0:
+       max0 = 8
+       for i in binary:
+           i = 0
 
     cons0 = 0  # counter for consequtive 0s
     cons1 = 0  # counter for consequtive 1s
